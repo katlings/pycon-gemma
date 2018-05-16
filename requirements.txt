@@ -1,0 +1,2 @@
+pyserial==3.4
+tweepy==3.6.0
