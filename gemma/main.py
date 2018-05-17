@@ -1,4 +1,4 @@
-# Translate morse code to letters and send over serial USB connection via print
+# Send morse code over serial USB connection via print
 # Designed for Gemma M0
 
 from digitalio import DigitalInOut, Direction
@@ -26,65 +26,6 @@ touch2 = TouchIn(board.A2)
 
 # based on experimentation. anything less than 600 loops is a '.', anything more is a '-'
 dash_length = 600
-
-morse_code_dict = {
-    '.-': 'a',
-    '-...': 'b',
-    '-.-.': 'c',
-    '-..': 'd',
-    '.': 'e',
-    '..-.': 'f',
-    '--.': 'g',
-    '....': 'h',
-    '..': 'i',
-    '.---': 'j',
-    '-.-': 'k',
-    '.-..': 'l',
-    '--': 'm',
-    '-.': 'n',
-    '---': 'o',
-    '.--.': 'p',
-    '--.-': 'q',
-    '.-.': 'r',
-    '...': 's',
-    '-': 't',
-    '..-': 'u',
-    '...-': 'v',
-    '.--': 'w',
-    '-..-': 'x',
-    '-.--': 'y',
-    '--..': 'z',
-    '.----': '1',
-    '..---': '2',
-    '...--': '3',
-    '....-': '4',
-    '.....': '5',
-    '-....': '6',
-    '--...': '7',
-    '---..': '8',
-    '----.': '9',
-    '-----': '0',
-    '-.----': '!',
-    '-..---': '@',
-    '-...--': '#',
-    '-....-': '$',
-    '-.....': '%',
-    '--....': '^',
-    '---...': '&',
-    '----..': '*',
-    '-----.': '(',
-    '------': ')',
-    '..----': '.',
-    '...---': ',',
-    '....--': '-',
-    '.....-': '_',
-    '......': '=',
-    '.-....': '+',
-    '.--...': '`',
-    '.---..': '~',
-    '.----.': ':',
-    '.-----': ';',
-}
 
 i = 0
 touching = False  # keep state between loops
@@ -141,10 +82,5 @@ while True:
         elif i > dash_length and letter_buffer:
             # we found a full character!
             letter = ''.join(letter_buffer)
-            l = morse_code_dict.get(letter)
-            if l:
-                print(l)
-            else:
-                # send over the pattern we thought we saw
-                print(''.join(letter_buffer))
+            print(letter)
             letter_buffer = []

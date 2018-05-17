@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
-import click
 import datetime
 import json
-import serial
 import sys
+
+import click
+import serial
 from tweepy import API, OAuthHandler
+
+from morse import morse_code_dict
+
 
 with open('creds.json', 'r') as f:
     creds = json.loads(f.read())
@@ -35,22 +39,25 @@ def main(serial_port):
     control_characters = ('EOF', 'BACK')
 
     while True:
-        char = s.readline().decode('utf-8').strip()
-        if len(char) > 10:
+        code = s.readline().decode('utf-8').strip()
+        if len(code) > 10:
             # catch and ignore messages that come from reloading code on the Gemma
             continue
 
-        if message_buffer and char == 'EOF':
+        # default to the .- representation if code not recognized
+        letter = morse_code_dict.get(code, code)
+
+        if message_buffer and letter == 'EOF':
             api.update_status(status=''.join(message_buffer))
             print('Tweeted', ''.join(message_buffer))
             message_buffer = []
-        elif message_buffer and char == 'BACK':
+        elif message_buffer and letter == 'BACK':
             message_buffer.pop()
             print('Message:', print_buffer(message_buffer))
-        elif char and char not in control_characters:
-            if char == 'SPACE':
-                char = ' '
-            message_buffer.append(char)
+        elif letter and letter not in control_characters:
+            if letter == 'SPACE':
+                letter = ' '
+            message_buffer.append(letter)
             print('Message:', print_buffer(message_buffer))
 
 if __name__ == '__main__':
