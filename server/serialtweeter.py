@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import click
 import datetime
 import json
 import serial
@@ -14,20 +15,22 @@ cs = creds['consumer_secret']
 ak = creds['access_key']
 acs = creds['access_secret']
 
-auth = OAuthHandler(ck, cs)
-auth.set_access_token(ak, acs)
-
-api = API(auth)
-
-s = serial.Serial('/dev/tty.usbmodem1411', 9600, timeout=1)
-
 print('Listening... <Ctrl+C> to exit')
 
 # Show underscores instead of spaces while constructing message
 def print_buffer(message_buffer):
     return ''.join('_' if x == ' ' else x for x in message_buffer)
 
-def main():
+
+@click.command()
+@click.argument('serial_port')
+def main(serial_port):
+    auth = OAuthHandler(ck, cs)
+    auth.set_access_token(ak, acs)
+
+    api = API(auth)
+
+    s = serial.Serial(serial_port, 9600, timeout=1)
     message_buffer = []
     control_characters = ('EOF', 'BACK')
 
@@ -38,7 +41,7 @@ def main():
             continue
 
         if message_buffer and char == 'EOF':
-            api.update_status(status=''.join(message_buffer) + " #pycon2018 #morsecodetweet")
+            api.update_status(status=''.join(message_buffer) + " #morsecodetweet")
             print('Tweeted', ''.join(message_buffer))
             message_buffer = []
         elif message_buffer and char == 'BACK':

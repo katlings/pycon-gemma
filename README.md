@@ -13,7 +13,7 @@ Required:
 
 ### Board setup
 
-Plug the Gemma board in via USB and copy [the board file](gemma/main.py) over. See [CircuitPython tutorials](https://learn.adafruit.com/welcome-to-circuitpython) for help connecting to the board and updating files. 
+Plug the Gemma board in via USB and copy [the board file](gemma/main.py) over. See [CircuitPython tutorials](https://learn.adafruit.com/welcome-to-circuitpython) for help connecting to the board and updating files.
 
 ### Server setup
 
