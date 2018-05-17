@@ -41,7 +41,7 @@ def main(serial_port):
             continue
 
         if message_buffer and char == 'EOF':
-            api.update_status(status=''.join(message_buffer) + " #morsecodetweet")
+            api.update_status(status=''.join(message_buffer))
             print('Tweeted', ''.join(message_buffer))
             message_buffer = []
         elif message_buffer and char == 'BACK':
