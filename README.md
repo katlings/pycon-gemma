@@ -49,4 +49,4 @@ backspace (A0) ->  |o  M0  o|  <- (A2) tap! / hold to tweet (~5 sec)
 The board reads one character at a time and sends it over the USB connection to the server, which displays
 the message that has been collected so far. Once the message is complete, long-press the 'tap' plate to send a tweet!
 
-The board recognizes the [International Morse Code](https://en.wikipedia.org/wiki/Morse_code) alphabet, as well as a number of custom 6-tone characters corresponding to special characters. The full dictionary is in [morse.py](server/morse.py).
+The board recognizes the [International Morse Code](https://en.wikipedia.org/wiki/Morse_code) alphabet, as well as a number of custom 6-tone patterns corresponding to special characters. The full dictionary is in [morse.py](server/morse.py).
