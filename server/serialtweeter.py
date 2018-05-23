@@ -34,7 +34,7 @@ def main(serial_port):
 
     api = API(auth)
 
-    s = serial.Serial(serial_port, 9600, timeout=1)
+    s = serial.Serial(serial_port, 115200, timeout=1)
     message_buffer = []
     control_characters = ('EOF', 'BACK')
 
